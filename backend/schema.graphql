@@ -1,0 +1,228 @@
+type Patient {
+  id: ID!
+  name: String
+  age: Int
+  observations(filter: ModelObservationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelObservationConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Observation {
+  id: ID!
+  pulse: Pulse
+  bloodPressure: BloodPressure
+  respiration: Respiration
+  patient: Patient
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Pulse {
+  bmp: Int
+}
+
+type BloodPressure {
+  systolic: Int
+  distolic: Int
+}
+
+type Respiration {
+  bmp: Int
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelPatientConnection {
+  items: [Patient]
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelPatientFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  age: ModelIntInput
+  and: [ModelPatientFilterInput]
+  or: [ModelPatientFilterInput]
+  not: ModelPatientFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+type Query {
+  getPatient(id: ID!): Patient
+  listPatients(filter: ModelPatientFilterInput, limit: Int, nextToken: String): ModelPatientConnection
+  getObservation(id: ID!): Observation
+  listObservations(filter: ModelObservationFilterInput, limit: Int, nextToken: String): ModelObservationConnection
+}
+
+input CreatePatientInput {
+  id: ID
+  name: String
+  age: Int
+}
+
+input UpdatePatientInput {
+  id: ID!
+  name: String
+  age: Int
+}
+
+input DeletePatientInput {
+  id: ID
+}
+
+type Mutation {
+  createPatient(input: CreatePatientInput!): Patient
+  updatePatient(input: UpdatePatientInput!): Patient
+  deletePatient(input: DeletePatientInput!): Patient
+  createObservation(input: CreateObservationInput!): Observation
+  updateObservation(input: UpdateObservationInput!): Observation
+  deleteObservation(input: DeleteObservationInput!): Observation
+}
+
+type Subscription {
+  onCreatePatient: Patient @aws_subscribe(mutations: ["createPatient"])
+  onUpdatePatient: Patient @aws_subscribe(mutations: ["updatePatient"])
+  onDeletePatient: Patient @aws_subscribe(mutations: ["deletePatient"])
+  onCreateObservation: Observation @aws_subscribe(mutations: ["createObservation"])
+  onUpdateObservation: Observation @aws_subscribe(mutations: ["updateObservation"])
+  onDeleteObservation: Observation @aws_subscribe(mutations: ["deleteObservation"])
+}
+
+input PulseInput {
+  bmp: Int
+}
+
+input BloodPressureInput {
+  systolic: Int
+  distolic: Int
+}
+
+input RespirationInput {
+  bmp: Int
+}
+
+type ModelObservationConnection {
+  items: [Observation]
+  nextToken: String
+}
+
+input ModelObservationFilterInput {
+  id: ModelIDInput
+  and: [ModelObservationFilterInput]
+  or: [ModelObservationFilterInput]
+  not: ModelObservationFilterInput
+}
+
+input CreateObservationInput {
+  id: ID
+  pulse: PulseInput
+  bloodPressure: BloodPressureInput
+  respiration: RespirationInput
+  observationPatientId: ID
+}
+
+input UpdateObservationInput {
+  id: ID!
+  pulse: PulseInput
+  bloodPressure: BloodPressureInput
+  respiration: RespirationInput
+  observationPatientId: ID
+}
+
+input DeleteObservationInput {
+  id: ID
+}
+
+input ModelObservationConditionInput {
+  and: [ModelObservationConditionInput]
+  or: [ModelObservationConditionInput]
+  not: ModelObservationConditionInput
+}

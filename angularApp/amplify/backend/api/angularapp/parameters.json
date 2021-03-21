@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "angularapp",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authangularapp3f4509db",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

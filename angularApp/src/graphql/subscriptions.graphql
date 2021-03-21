@@ -1,0 +1,133 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreatePatient {
+  onCreatePatient {
+    id
+    name
+    age
+    observations {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePatient {
+  onUpdatePatient {
+    id
+    name
+    age
+    observations {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePatient {
+  onDeletePatient {
+    id
+    name
+    age
+    observations {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateObservation {
+  onCreateObservation {
+    id
+    pulse {
+      bmp
+    }
+    bloodPressure {
+      systolic
+      distolic
+    }
+    respiration {
+      bmp
+    }
+    patient {
+      id
+      name
+      age
+      observations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateObservation {
+  onUpdateObservation {
+    id
+    pulse {
+      bmp
+    }
+    bloodPressure {
+      systolic
+      distolic
+    }
+    respiration {
+      bmp
+    }
+    patient {
+      id
+      name
+      age
+      observations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteObservation {
+  onDeleteObservation {
+    id
+    pulse {
+      bmp
+    }
+    bloodPressure {
+      systolic
+      distolic
+    }
+    respiration {
+      bmp
+    }
+    patient {
+      id
+      name
+      age
+      observations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}

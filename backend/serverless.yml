@@ -1,0 +1,104 @@
+service: cc-vital-charting
+
+plugins:
+   - serverless-appsync-plugin
+   - serverless-python-requirements
+   - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: python3.7
+  region: 'ap-south-1' # add region
+  profile: 'serverless-admin' # add user profile name here
+  environment:
+    DYNAMODB_TABLE: ${self:custom.APPSYNC_TABLE}
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource: "arn:aws:dynamodb:#{AWS::Region}:*:table/${self:custom.APPSYNC_TABLE}"
+
+custom:      
+  APPSYNC_TABLE: cc-vital-charting
+  
+  appSync:
+    name:  vital-charting
+    schema: schema.graphql
+    authenticationType: AMAZON_COGNITO_USER_POOLS
+    userPoolConfig:
+      defaultAction: ALLOW
+      userPoolId: 'ap-south-1_QCzKVWJPf' # required # user pool ID
+    mappingTemplates:
+      - dataSource: GraphQLResolver
+        type: Query
+        field: getPatient
+        request: Query.getPatient.req.vtl
+        response: Query.getPatient.res.vtl
+      - dataSource: GraphQLResolver
+        type: Query
+        field: listPatients
+        request: Query.listPatients.req.vtl
+        response: Query.listPatients.res.vtl
+      - dataSource: GraphQLResolver
+        type: Query
+        field: listObservations
+        request: Query.listObservations.req.vtl
+        response: Query.listObservations.res.vtl
+      - dataSource: GraphQLResolver
+        type: Mutation
+        field: createPatient
+        request: Mutation.createPatient.req.vtl
+        response: Mutation.createPatient.res.vtl
+      - dataSource: GraphQLResolver
+        type: Mutation
+        field: updatePatient
+        request: Mutation.updatePatient.req.vtl
+        response: Mutation.updatePatient.res.vtl
+      - dataSource: GraphQLResolver
+        type: Mutation
+        field: deletePatient
+        request: Mutation.deletePatient.req.vtl
+        response: Mutation.deletePatient.res.vtl
+      - dataSource: GraphQLResolver
+        type: Mutation
+        field: createObservation
+        request: Mutation.createObservation.req.vtl
+        response: Mutation.createObservation.res.vtl
+      - dataSource: GraphQLResolver
+        type: Mutation
+        field: updateObservation
+        request: Mutation.updateObservation.req.vtl
+        response: Mutation.updateObservation.res.vtl
+      - dataSource: GraphQLResolver
+        type: Mutation
+        field: deleteObservation
+        request: Mutation.deleteObservation.req.vtl
+        response: Mutation.deleteObservation.res.vtl
+    dataSources:
+      - type: AWS_LAMBDA
+        name: GraphQLResolver
+        description: 'Lambda DataSource'
+        config:
+          lambdaFunctionArn: { "Fn::GetAtt": [GraphQLResolverLambdaFunction, Arn] } 
+          
+
+functions:
+  GraphQLResolver:
+    handler: handler.graphqlHanlder
+
+resources:
+  Resources:
+    GraphQLResolverLambdaFunction:
+      Type: AWS::Lambda::Function
+    AppsyncTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.APPSYNC_TABLE} 

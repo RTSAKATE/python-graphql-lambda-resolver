@@ -1,0 +1,151 @@
+# this is an auto generated file. This will be overwritten
+mutation CreatePatient(
+  $input: CreatePatientInput!
+  $condition: ModelPatientConditionInput
+) {
+  createPatient(input: $input, condition: $condition) {
+    id
+    name
+    age
+    observations {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdatePatient(
+  $input: UpdatePatientInput!
+  $condition: ModelPatientConditionInput
+) {
+  updatePatient(input: $input, condition: $condition) {
+    id
+    name
+    age
+    observations {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeletePatient(
+  $input: DeletePatientInput!
+  $condition: ModelPatientConditionInput
+) {
+  deletePatient(input: $input, condition: $condition) {
+    id
+    name
+    age
+    observations {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateObservation(
+  $input: CreateObservationInput!
+  $condition: ModelObservationConditionInput
+) {
+  createObservation(input: $input, condition: $condition) {
+    id
+    pulse {
+      bmp
+    }
+    bloodPressure {
+      systolic
+      distolic
+    }
+    respiration {
+      bmp
+    }
+    patient {
+      id
+      name
+      age
+      observations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateObservation(
+  $input: UpdateObservationInput!
+  $condition: ModelObservationConditionInput
+) {
+  updateObservation(input: $input, condition: $condition) {
+    id
+    pulse {
+      bmp
+    }
+    bloodPressure {
+      systolic
+      distolic
+    }
+    respiration {
+      bmp
+    }
+    patient {
+      id
+      name
+      age
+      observations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteObservation(
+  $input: DeleteObservationInput!
+  $condition: ModelObservationConditionInput
+) {
+  deleteObservation(input: $input, condition: $condition) {
+    id
+    pulse {
+      bmp
+    }
+    bloodPressure {
+      systolic
+      distolic
+    }
+    respiration {
+      bmp
+    }
+    patient {
+      id
+      name
+      age
+      observations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}

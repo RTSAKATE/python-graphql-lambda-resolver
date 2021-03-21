@@ -1,0 +1,27 @@
+type Patient @model {
+  id: ID!
+  name: String
+  age: Int
+  observations: [Observation] @connection(name: "PatientObservations")  
+}
+
+type Observation @model {
+  id: ID!
+  pulse: Pulse
+  bloodPressure: BloodPressure
+  respiration: Respiration
+  patient: Patient @connection(name: "PatientObservations")
+}
+
+type Pulse {  
+  bmp: Int
+}
+
+type BloodPressure {  
+  systolic: Int
+  distolic: Int
+}
+
+type Respiration {  
+  bmp: Int
+}
